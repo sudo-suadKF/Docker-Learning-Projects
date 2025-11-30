@@ -25,6 +25,7 @@ This project demonstrates how web apps interact with relational databases inside
 - An image for the Flask App
 - A container network
 - A docker compose file
+- Images pushed and pulled from public and private repositories
 
 Docker Compose orchestrating the services
 
@@ -43,24 +44,26 @@ This project teaches:
             db="mysql"      # Name of the database to connect to
         )
         ```
-- Multi-stage Dockerfile to optimize the container's deployment time:
-    **#Stage 1: Build**
-    **FROM python:3.8-slim as Build**
-    **WORKDIR /app**
-   **RUN apt-get update && apt-get install -y \***
-        **gcc \***
-        **python3-dev \***
-        **libmariadb-dev \***
-        **pkg-config**
-    **COPY . .**
-    **RUN pip install flask mysqlclient**
+- Multi-stage Dockerfile to optimize the container's deployment time: 
+    ```docker
+    #Stage 1: Build
+    FROM python:3.8-slim as Build
+    WORKDIR /app
+    RUN apt-get update && apt-get install -y \
+        gcc \
+        python3-dev \
+        libmariadb-dev \
+        pkg-config
+    COPY . .
+    RUN pip install flask mysqlclient
 
-    **#Stage 2: Producion**
-    **FROM python:3.8-slim**
-    **WORKDIR /app**
-    **COPY --from=Build /app /app**
-    **EXPOSE 5002**
-    **CMD ["python", "app.py"]**
+    #Stage 2: Producion
+    FROM python:3.8-slim
+    WORKDIR /app
+    COPY --from=Build /app /app
+    EXPOSE 5002
+    CMD ["python", "app.py"]
+    ```
 - Proper Docker Compose structuring for DB services:
     **mydb:**
        **image: mysql:5.7**
@@ -89,6 +92,7 @@ This project teaches:
     `docker compose up`
 
 #### Key Lessons
+- How to connect to a MySQL database
 - Understand the workflow, app -> create dockerfile ->  create or pull docker image -> create network -> build and run container with linking to network.
 - Docker Compose simplifies the whole workflow, app -> create dockerfile -> create or pull docker image -> create docker-copmpose.yml -> run containers with docker compose.
 - How networks allow app -> database communication with containers.
