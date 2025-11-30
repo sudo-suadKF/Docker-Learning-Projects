@@ -84,13 +84,13 @@ Basically it separates the two stages which makes the image build lighter, the i
         - Pull by following command:  
         `docker pull <image_name>`  
 
-        example from project:   
-        `docker pull mysql`
+            example from project:   
+            `docker pull mysql`
     - Using the images to run containers:  
     `docker run -d --name <name_container> --network <name_network> -p <port number:port number> <image_name>`  
 
-    example:  
-    `docker run -d --name my-app2 --network my-network -p 5002:5002 mysql:latest`
+        example:  
+        `docker run -d --name my-app2 --network my-network -p 5002:5002 mysql:latest`
 - Pushing & pulling images from AWS ECR (private):
     - Create an AWS account
     - Navigate to the ECR (Elastic Container Registry)
@@ -111,24 +111,24 @@ Basically it separates the two stages which makes the image build lighter, the i
     - Using the images to run containers:  
     `docker run -d --name <name_container> --network <name_network> -p <port number:port number> <image_URI>` 
 
-    example:  
-    `docker run -d --name my-app2 --network my-network -p 5002:5002 <image_URI>`
+        example:  
+        `docker run -d --name my-app2 --network my-network -p 5002:5002 <image_URI>`
 - Creating images for applications of the dockerfile:  
 `docker build -t <add image_name> .`  
 
-example:  
-`docker build -t my-image`
+    example:  
+    `docker build -t my-image`
 - Creating networks to link multiple containers together:
     - Create a network with following command:  
     `docker network <name>` 
 
-    example:  
-    `docker network my-network` 
+        example:  
+        `docker network my-network` 
     - Run the containers linking to the created network:  
     `docker run -d --name <name_container> --network <name_network> -p <port number:port number> <image_name>` 
 
-    example:  
-    `docker run -d --name my-app1 --network my-network -p 5002:5002 my-image`  
+        example:  
+        `docker run -d --name my-app1 --network my-network -p 5002:5002 my-image`  
     And run this for the other container as well.   
     `docker run -d --name my-app2 --network my-network -e MYSQL_ROOT_PASSWORD=my-secret-pw mysql:5.7` 
 - Creating docker compose file makes it much easier, you basically run one command and Docker runs all the commands above, creating network to running the containers: 
@@ -251,8 +251,8 @@ This project teaches:
     - Scaling web services with Docker Compose:   
     `docker compose up --scale <name of app service in compose file>="number of instances"` 
 
-    example from the project:   
-    `docker compose up --scale web=3`
+        example from the project:   
+        `docker compose up --scale web=3`
 
 #### Key Lessons
 - Understanding the importance and how to scale an application with Docker Compose in production environment
