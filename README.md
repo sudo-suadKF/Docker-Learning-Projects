@@ -65,34 +65,34 @@ This project teaches:
     ```
 - Pushing & pulling images from DockerHub (public):
     - Create an account on DockerHub
-    - Login to DockerHub through the terminal and enter your details:
+    - Login to DockerHub through the terminal and enter your details: 
         `docker login`
     - Pushing:
         - Create a repository in DockerHub
-        - Build and tag the image in the terminal:
+        - Build and tag the image in the terminal: 
             `docker build -t <Dockerhub username>/<repository name>:<tag> <dockerfile's directory>`
-            example from project:
+            example from project: 
             `docker build -t sudosuad/flask-mysql:v1 .`
             The "." at the end says the dockerfile is in the current working directory.
-        - Push the image:
-            `docker push sudosuad/flask-mysql:v1`
+        - Push the image: 
+            `docker push sudosuad/flask-mysql:v1` 
             <img src="/images/pushed_image_dockerhub.png"></img>
     - Pulling:
         - Dockerhub is widely used because of it's accesibility. You can easily pull official, secure, up-to-date images from trusted resources, like MySQL, Mongo, Python, Node.js etc. 
-        - Pull by following command:
-            `docker pull <image_name>`
-            example from project: 
+        - Pull by following command: 
+            `docker pull <image_name>` 
+            example from project:  
             `docker pull mysql`
-    - Using the images to run containers:
-        `docker run -d --name <name_container> --network <name_network> -p <port number:port number> <image_name>`
-        example:
+    - Using the images to run containers: 
+        `docker run -d --name <name_container> --network <name_network> -p <port number:port number> <image_name>` 
+        example: 
         `docker run -d --name my-app2 --network my-network -p 5002:5002 mysql:latest`
 - Pushing & pulling images from AWS ECR (private):
     - Create an AWS account
     - Navigate to the ECR (Elastic Container Registry)
     - Create a repository
     - Pushing:
-        - In the terminal, login to AWS and choose your local zone:
+        - In the terminal, login to AWS and choose your local zone: 
         `aws login`
         - On AWS page, enter your repository and check "View push commands"
         - Follow the steps from AWS, 1-4, copy and paste every command to push the image
@@ -102,29 +102,29 @@ This project teaches:
         - Pull the stored image by using the image's URI
         - In the repository, navigate to Images section and press the highlighted tag
         - Copy the image's URI and head to the terminal
-        - Pull the image by following command:
+        - Pull the image by following command: 
             `docker pull <image's URI>`
-    - Using the images to run containers:
-        `docker run -d --name <name_container> --network <name_network> -p <port number:port number> <image_URI>`
-        example:
+    - Using the images to run containers: 
+        `docker run -d --name <name_container> --network <name_network> -p <port number:port number> <image_URI>` 
+        example: 
         `docker run -d --name my-app2 --network my-network -p 5002:5002 <image_URI>`
-- Creating images for applications of the dockerfile:
-    `docker build -t <add image_name> .`
-    example:
+- Creating images for applications of the dockerfile: 
+    `docker build -t <add image_name> .` 
+    example: 
     `docker build -t my-image`
 - Creating networks to link multiple containers together:
-    - Create a network with following command
-        `docker network <name>`
-        example:
-        `docker network my-network`
-    - Run the containers linking to the created network:
-        `docker run -d --name <name_container> --network <name_network> -p <port number:port number> <image_name>`
-        example:
-        `docker run -d --name my-app1 --network my-network -p 5002:5002 my-image`
-        And run this for the other container as well.
-        `docker run -d --name my-app2 --network my-network -e MYSQL_ROOT_PASSWORD=my-secret-pw mysql:5.7`
+    - Create a network with following command: 
+        `docker network <name>` 
+        example: 
+        `docker network my-network` 
+    - Run the containers linking to the created network: 
+        `docker run -d --name <name_container> --network <name_network> -p <port number:port number> <image_name>` 
+        example: 
+        `docker run -d --name my-app1 --network my-network -p 5002:5002 my-image` 
+        And run this for the other container as well. 
+        `docker run -d --name my-app2 --network my-network -e MYSQL_ROOT_PASSWORD=my-secret-pw mysql:5.7` 
 - Creating docker compose file makes it much easier, you basically run one command and Docker runs all the commands above, creating network to running the containers:
-    `docker compose up`
+    `docker compose up` 
     Docker compose file:
     ```docker
     services:
@@ -190,7 +190,6 @@ This project teaches:
         redis-data:
             driver: local
     ```
-- 
 - How to scale application when the traffic load increases:
     - In production environment, it is necessary to scale your services to ensure high availability. The services can't map to a specific port, it has to be exposed to a port. Otherwise it will lead to a port conflict if you want to connect multiple instances to same port. Expose  This is specified by following code:
     ```docker
@@ -206,8 +205,9 @@ This project teaches:
                 - REDIS_PORT=6379
     ```
     Expose directive makes the Flask app's port 5002 available to other services within the docker network, but doesn't bind it to the host network.
-    - The application is not accessible from the host machine at the moment since it is not mapped to a port, it is exposed. To make it accessible, here is where the load balancer comes in. 
-    To access the application, we have to bind to a port on the load balancer, which becomes a single point of accessing the application. Nginx service is used here as a load balancer and is implemented in the docker-compose file: 
+    - The application is not accessible from the host machine at the moment since it is not mapped to a port, it is exposed. To make it accessible, here is where the load balancer comes in.  
+    To access the application, we have to bind to a port on the load balancer, which becomes a single point of accessing the application.  
+    Nginx service is used here as a load balancer and is implemented in the docker-compose file: 
     ```docker
     nginx:
         image: nginx:latest
@@ -218,7 +218,8 @@ This project teaches:
             depends_on:
                 - web
     ```
-    Here, the port is being mapped which makes the application accessible. It uses the latest Nginx image which will be pulled from DockerHub by Docker Compose and it is dependent on the application to run first. The volume is basically mounting a custom NGINX config file, NGINX container, to configure load balancing, which means now we have to create a new file called nginx.conf: 
+    Here, the port is being mapped which makes the application accessible. It uses the latest Nginx image which will be pulled from DockerHub by Docker Compose and it is dependent on the application to run first.  
+    The volume is basically mounting a custom NGINX config file, NGINX container, to configure load balancing, which means now we have to create a new file called nginx.conf: 
     ```docker
     events {}
 
@@ -236,9 +237,9 @@ This project teaches:
         }
     }
     ```
-    - Scaling web services with Docker Compose: 
-        `docker compose up --scale <name of app service in compose file>="number of instances"`
-        example from the project: 
+    - Scaling web services with Docker Compose:  
+        `docker compose up --scale <name of app service in compose file>="number of instances"` 
+        example from the project:  
         `docker compose up --scale web=3`
 
 #### Key Lessons
@@ -258,12 +259,12 @@ A clean introduction to containerizing JavaScript applications.
 
 #### Why this matters & what you will learn
 - How to download and setup a simple node.js application:
-    - Run the following commands in terminal to download Node.js and NPM in Ubuntu:
-        `sudo apt update`
-        `sudo apt install nodejs npm
-    - Verify the installation by checking the following commands:
-        `node -v`
-        `npm -v`
+    - Run the following commands in terminal to download Node.js and NPM in Ubuntu: 
+        `sudo apt update` 
+        `sudo apt install nodejs npm`
+    - Verify the installation by checking the following commands: 
+        `node -v` 
+        `npm -v` 
         You should get the version as output.
     - Navigate to your project directory and intialize a new node.js project and have the package.json file setup like down below:
         - `npm init -y`
@@ -290,7 +291,7 @@ A clean introduction to containerizing JavaScript applications.
         }
         ```
         
-    - Install the express framework that provides a robust set of features for web applications:
+    - Install the express framework that provides a robust set of features for web applications: 
         `npm install express`
     - Add this following simple Node.js application code:
         ```js
@@ -308,16 +309,17 @@ A clean introduction to containerizing JavaScript applications.
         app.listen(PORT, () => console.log(`server has started on: ${PORT}`));
         ```
 - Installing Nodemon, a command-line tool, for helping the development of Node.js based applications by automatically restarting the node application when file changes in the directory are detected. 
-    - By following command you can download the tool:
+    - By following command you can download the tool: 
         `npm install --save-dev nodemon`
-    - Run the app with following command to be able to use nodemon:
+    - Run the app with following command to be able to use nodemon: 
         `npm run dev`
     - Test the code with changing the content of the application code down below and see the output in the terminal how the nodemon behaves:
         ```js
         console.log('Hello World!');
         ```
 - Time to containerize the node.js application:
-    - Create a dockerfile, it is different from flask. Important to include the dependencies from package*.json files and run the right CMD with nodemon:
+    - Create a dockerfile, it is different from flask.  
+    Important to include the dependencies from package*.json files and run the right CMD with nodemon:
         ```docker
         FROM node:24-slim
 
@@ -333,7 +335,7 @@ A clean introduction to containerizing JavaScript applications.
 
         CMD ["npm", "run", "dev"]
         ```
-    - Build the image:
+    - Build the image: 
         `docker build -t <image_name>`
     - Create a docker-compose file with the image:
         ```docker
@@ -343,11 +345,10 @@ A clean introduction to containerizing JavaScript applications.
             ports:
                 - '1199:1199'
         ```
-    - Run the application with Docker Compose:
+    - Run the application with Docker Compose: 
         `docker compose -d --build`
     - Check if it worked by searching for:
         - **127.0.0.1:1199**
-        - The result: 
         <img src="images/nodejs_app.png"></img>
 
 #### Key Lessons
