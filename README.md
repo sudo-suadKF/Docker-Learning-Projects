@@ -72,6 +72,7 @@ Basically it separates the two stages which makes the image build lighter, the i
         - Create a repository in DockerHub
         - Build and tag the image in the terminal:  
         `docker build -t <Dockerhub username>/<repository name>:<tag> <dockerfile's directory>` 
+
         example from project:  
         `docker build -t sudosuad/flask-mysql:v1 .`  
         The "." at the end says the dockerfile is in the current working directory.
@@ -82,10 +83,12 @@ Basically it separates the two stages which makes the image build lighter, the i
         - Dockerhub is widely used because of it's accesibility. You can easily pull official, secure, up-to-date images from trusted resources, like MySQL, Mongo, Python, Node.js etc. 
         - Pull by following command:  
         `docker pull <image_name>`  
+
         example from project:   
         `docker pull mysql`
     - Using the images to run containers:  
     `docker run -d --name <name_container> --network <name_network> -p <port number:port number> <image_name>`  
+
     example:  
     `docker run -d --name my-app2 --network my-network -p 5002:5002 mysql:latest`
 - Pushing & pulling images from AWS ECR (private):
@@ -106,20 +109,24 @@ Basically it separates the two stages which makes the image build lighter, the i
         - Pull the image by following command:  
         `docker pull <image's URI>`
     - Using the images to run containers:  
-    `docker run -d --name <name_container> --network <name_network> -p <port number:port number> <image_URI>`  
+    `docker run -d --name <name_container> --network <name_network> -p <port number:port number> <image_URI>` 
+
     example:  
     `docker run -d --name my-app2 --network my-network -p 5002:5002 <image_URI>`
 - Creating images for applications of the dockerfile:  
 `docker build -t <add image_name> .`  
+
 example:  
 `docker build -t my-image`
 - Creating networks to link multiple containers together:
     - Create a network with following command:  
-    `docker network <name>`  
+    `docker network <name>` 
+
     example:  
     `docker network my-network` 
     - Run the containers linking to the created network:  
     `docker run -d --name <name_container> --network <name_network> -p <port number:port number> <image_name>` 
+
     example:  
     `docker run -d --name my-app1 --network my-network -p 5002:5002 my-image`  
     And run this for the other container as well.   
@@ -241,10 +248,11 @@ This project teaches:
         }
     }
     ```
-    - Scaling web services with Docker Compose:  
-        `docker compose up --scale <name of app service in compose file>="number of instances"` 
-        example from the project:  
-        `docker compose up --scale web=3`
+    - Scaling web services with Docker Compose:   
+    `docker compose up --scale <name of app service in compose file>="number of instances"` 
+
+    example from the project:   
+    `docker compose up --scale web=3`
 
 #### Key Lessons
 - Understanding the importance and how to scale an application with Docker Compose in production environment
