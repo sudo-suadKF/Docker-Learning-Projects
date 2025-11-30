@@ -31,8 +31,8 @@ This project demonstrates how web apps interact with relational databases inside
 #### Why this matters & what you will learn
 This project teaches:
 - Connecting to MySQL database:
-    - install MySQL:
-        `sudo apt update`
+    - install MySQL: 
+        `sudo apt update` 
         `sudo apt install mysql`
     - then connect to it in app file:
         ```python
@@ -43,7 +43,8 @@ This project teaches:
             db="mysql"      # Name of the database to connect to
         )
         ```
-- Multi-stage Dockerfile to optimize the container's deployment time by creating one stage for building the application and another stage for creating the image. Basically it separates the two stages which makes the image build lighter, the image does not require all dependencies for building an application: 
+- Multi-stage Dockerfile to optimize the container's deployment time by creating one stage for building the application and another stage for creating the image. 
+Basically it separates the two stages which makes the image build lighter, the image does not require all dependencies for building an application: 
     ```docker
     #Stage 1: Build
     FROM python:3.8-slim as Build
@@ -65,8 +66,8 @@ This project teaches:
     ```
 - Pushing & pulling images from DockerHub (public):
     - Create an account on DockerHub
-    - Login to DockerHub through the terminal and enter your details: 
-        `docker login`
+    - Login to DockerHub through the terminal and enter your details:  
+    `docker login`
     - Pushing:
         - Create a repository in DockerHub
         - Build and tag the image in the terminal: 
@@ -349,7 +350,7 @@ A clean introduction to containerizing JavaScript applications.
         `docker compose -d --build`
     - Check if it worked by searching for:
         - **127.0.0.1:1199** 
-        
+
         <img src="images/nodejs_app.png"></img>
 
 #### Key Lessons
